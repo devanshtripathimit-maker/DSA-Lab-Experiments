@@ -1,0 +1,68 @@
+class Student:
+    def __init__(self, roll, name):
+        self.roll = roll
+        self.name = name
+        self.left = None
+        self.right = None
+
+
+def insert(root, roll, name):
+    if root is None:
+        return Student(roll, name)
+
+    if roll < root.roll:
+        root.left = insert(root.left, roll, name)
+
+    elif roll > root.roll:
+        root.right = insert(root.right, roll, name)
+
+    return root
+
+
+def inorder(root):
+    if root:
+        inorder(root.left)
+        print(root.roll, "-", root.name)
+        inorder(root.right)
+
+
+def search(root, roll):
+    if root is None:
+        return None
+
+    if root.roll == roll:
+        return root
+
+    if roll < root.roll:
+        return search(root.left, roll)
+
+    return search(root.right, roll)
+
+
+# Create Student BST
+
+root = None
+
+root = insert(root, 103, "Rahul")
+root = insert(root, 101, "Aman")
+root = insert(root, 105, "Riya")
+root = insert(root, 102, "Neha")
+root = insert(root, 104, "Arjun")
+
+
+print("Student Records in Ascending Roll Number:")
+inorder(root)
+
+
+# Search Student
+
+roll = int(input("\nEnter roll number to search: "))
+
+student = search(root, roll)
+
+if student:
+    print("Student Found:")
+    print("Roll Number:", student.roll)
+    print("Name:", student.name)
+else:
+    print("Student not found.")
